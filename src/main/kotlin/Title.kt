@@ -30,6 +30,9 @@ class Title(var titleProps: TitleProps) : RComponent<TitleProps, TitleState>(tit
                 width = LinearDimension("100%")
                 paddingLeft = 10.px
                 paddingRight = 10.px
+                top=0.px
+                left=0.px
+                right=0.px
             }
 
             styledImg(src = "logo/logo-192.png", alt = "Militaernews") {

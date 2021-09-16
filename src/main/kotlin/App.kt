@@ -30,10 +30,6 @@ try {
 
     when (serviceWorkerState) {
         is ServiceWorkerState.Registered -> {
-            h1 {
-                +"Successfully registered a service worker!"
-            }
-
             child(Title::class) {
                 attrs {
                     name = "React!"
