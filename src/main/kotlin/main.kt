@@ -6,22 +6,22 @@ import react.dom.render
 import styled.injectGlobal
 
 fun main() {
-    window.addEventListener("load", {event->
+    window.addEventListener("load", { event ->
         console.log("load event listener")
 
-    /*
+        /*
 
-        window.navigator.serviceWorker.register("/sw.js").then(
-            onFulfilled = {
-                console.log("ServiceWorker registration successful with scope: ", it.scope)
+            window.navigator.serviceWorker.register("/sw.js").then(
+                onFulfilled = {
+                    console.log("ServiceWorker registration successful with scope: ", it.scope)
 
-            }
-            , onRejected = {
-                console.log("ServiceWorker registration failed: ", it.message);
-            }
-        )
+                }
+                , onRejected = {
+                    console.log("ServiceWorker registration failed: ", it.message);
+                }
+            )
 
-     */
+         */
     })
 
 

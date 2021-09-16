@@ -1,6 +1,4 @@
 import component.loadingComponent
-import kotlinx.browser.window
-import kotlinx.coroutines.MainScope
 import react.Props
 import react.RBuilder
 import react.RHandler
@@ -17,11 +15,11 @@ lateinit var pushManager: UsePushManager
 
 val App = functionComponent<Props> {
 
-try {
-    serviceWorkerState = useServiceWorker()
-}catch(e:Exception){
-    console.log("--- EXX ::: $e")
-}
+    try {
+        serviceWorkerState = useServiceWorker()
+    } catch (e: Exception) {
+        console.log("--- EXX ::: $e")
+    }
     pushManager = usePushManager(
         serviceWorkerState = serviceWorkerState,
         publicKey = "BLceSSynHW5gDWDz-SK5mmQgUSAOzs_yXMPtDO0AmNsRjUllTZsdmDU4_gKvTr_q1hA8ZX19xLbGe28Bkyvwm3E"
@@ -30,7 +28,7 @@ try {
 
     when (serviceWorkerState) {
         is ServiceWorkerState.Registered -> {
-            child(Title::class) {
+            child(Header::class) {
                 attrs {
                     name = "React!"
                 }

@@ -11,15 +11,15 @@ import styled.styledHeader
 import styled.styledImg
 import util.isLandscape
 
-external interface TitleProps : Props {
+external interface HeaderProps : Props {
     var name: String
 }
 
-data class TitleState(val name: String) : State
+data class HeaderState(val name: String) : State
 
 @OptIn(ExperimentalJsExport::class)
 @JsExport
-class Title(var titleProps: TitleProps) : RComponent<TitleProps, TitleState>(titleProps) {
+class Header(var headerProps: HeaderProps) : RComponent<HeaderProps, HeaderState>(headerProps) {
 
     override fun RBuilder.render() {
         styledHeader {
@@ -30,9 +30,9 @@ class Title(var titleProps: TitleProps) : RComponent<TitleProps, TitleState>(tit
                 width = LinearDimension("100%")
                 paddingLeft = 10.px
                 paddingRight = 10.px
-                top=0.px
-                left=0.px
-                right=0.px
+                top = 0.px
+                left = 0.px
+                right = 0.px
             }
 
             styledImg(src = "logo/logo-192.png", alt = "Militaernews") {
