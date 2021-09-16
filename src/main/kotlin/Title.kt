@@ -1,5 +1,4 @@
 import component.iconButton
-import util.isLandscape
 import kotlinx.css.*
 import react.Props
 import react.RBuilder
@@ -10,6 +9,7 @@ import styled.css
 import styled.styledDiv
 import styled.styledHeader
 import styled.styledImg
+import util.isLandscape
 
 external interface TitleProps : Props {
     var name: String

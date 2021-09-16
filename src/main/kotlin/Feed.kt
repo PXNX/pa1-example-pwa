@@ -23,7 +23,7 @@ external interface FeedProps : Props {
 
 class Feed(var feedProps: FeedProps) : RComponent<FeedProps, State>(feedProps) {
 
-    init{
+    init {
         state.init(feedProps)
     }
 
@@ -146,7 +146,6 @@ class Feed(var feedProps: FeedProps) : RComponent<FeedProps, State>(feedProps) {
 
                                 css {
                                     fontWeight = FontWeight.bold
-                                    fontFamily = "sans-serif"
                                     color = Color("#fff")
                                 }
                             }

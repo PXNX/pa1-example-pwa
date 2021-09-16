@@ -13,7 +13,7 @@ import react.useState
  */
 data class UsePushManager(
     val pushManagerState: PushManagerState,
-    val subscribeUser : suspend (
+    val subscribeUser: suspend (
         notSubscribedState: PushManagerState.NotSubscribed,
         handleSubscription: (suspend (subscription: PushSubscription) -> Unit)?
     ) -> Unit,
@@ -56,7 +56,7 @@ fun usePushManager(serviceWorkerState: ServiceWorkerState, publicKey: String): U
         }
     }
 
-    useEffect( serviceWorkerState) {
+    useEffect(serviceWorkerState) {
         scope.launch {
             if (serviceWorkerState is ServiceWorkerState.Registered && pushManagerState is PushManagerState.NotLoaded) {
                 loadPushManagerState(serviceWorkerState.swRegistration.pushManager)

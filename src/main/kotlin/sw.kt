@@ -1,20 +1,26 @@
-import kotlinx.coroutines.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.asPromise
+import kotlinx.coroutines.async
+import kotlinx.coroutines.await
 import org.w3c.fetch.Response
 import org.w3c.notifications.NotificationEvent
 import org.w3c.notifications.NotificationOptions
-import org.w3c.workers.*
+import org.w3c.workers.FetchEvent
+import org.w3c.workers.InstallEvent
+import org.w3c.workers.ServiceWorkerGlobalScope
 
 external val self: ServiceWorkerGlobalScope
 val scope = MainScope()
 
 const val MAIN_CACHE = "mainCache"
 
+
 fun installServiceWorker() {
     val offlineContent = arrayOf(
-            "/index.html",
-            "/pa1-example-pwa.js",
-            "/logo/logo-192.png",
-            "/logo/logo-512.png"
+        "/index.html",
+     //   "/pa1-example-pwa.js",
+        "/logo/logo-192.png",
+        "/logo/logo-512.png"
     )
 
     self.addEventListener("install", { event ->
@@ -30,7 +36,7 @@ fun installServiceWorker() {
     })
 
     // using the "Network falling back to cache" strategy (https://developers.google.com/web/ilt/pwa/caching-files-with-service-worker#network_falling_back_to_the_cache)
-    self.addEventListener("fetch",  { event ->
+    self.addEventListener("fetch", { event ->
         event as FetchEvent
         if (event.request.url.contains("http").not()) return@addEventListener
 

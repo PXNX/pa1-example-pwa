@@ -7,27 +7,27 @@ import react.RBuilder
 import react.dom.attrs
 import styled.*
 
-fun RBuilder.loadingComponent() = styledDiv{
-    css{
-        backgroundColor=Color("#fff444")
-        width=LinearDimension.fillAvailable
-        height= LinearDimension.fillAvailable
-        alignContent= Align.center
-        justifyContent=JustifyContent.center
+fun RBuilder.loadingComponent() = styledDiv {
+    css {
+        backgroundColor = Color("#fff444")
+        width = LinearDimension.fillAvailable
+        height = LinearDimension.fillAvailable
+        alignContent = Align.center
+        justifyContent = JustifyContent.center
     }
 
 
     LoadingSpinner {
-    attrs {
-        type="Oval"
-        color="white"
-        height=100
-        width=100
+        attrs {
+            type = "Oval"
+            color = "white"
+            height = 100
+            width = 100
+        }
     }
 }
-}
 
-fun StyledDOMBuilder<DIV>.iconButton(url:String, iconName:String) = styledA(url) {
+fun StyledDOMBuilder<DIV>.iconButton(url: String, iconName: String) = styledA(url) {
     styledImg(src = "icon/$iconName.svg", alt = iconName) {
         attrs {
             width = "35"
@@ -36,6 +36,6 @@ fun StyledDOMBuilder<DIV>.iconButton(url:String, iconName:String) = styledA(url)
     }
 
     css {
-        padding="50px"
+        padding = "50px"
     }
 }

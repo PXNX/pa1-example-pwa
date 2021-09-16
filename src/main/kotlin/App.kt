@@ -1,4 +1,5 @@
 import component.loadingComponent
+import kotlinx.browser.window
 import kotlinx.coroutines.MainScope
 import react.Props
 import react.RBuilder
@@ -16,9 +17,11 @@ lateinit var pushManager: UsePushManager
 
 val App = functionComponent<Props> {
 
-    MainScope()
-
+try {
     serviceWorkerState = useServiceWorker()
+}catch(e:Exception){
+    console.log("--- EXX ::: $e")
+}
     pushManager = usePushManager(
         serviceWorkerState = serviceWorkerState,
         publicKey = "BLceSSynHW5gDWDz-SK5mmQgUSAOzs_yXMPtDO0AmNsRjUllTZsdmDU4_gKvTr_q1hA8ZX19xLbGe28Bkyvwm3E"
@@ -42,8 +45,6 @@ val App = functionComponent<Props> {
                     pushManagerState = pushManager.pushManagerState
                 }
             }
-
-
 
 
         }

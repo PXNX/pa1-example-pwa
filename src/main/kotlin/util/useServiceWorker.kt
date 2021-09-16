@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 import react.useEffect
 import react.useState
 
+
 /**
  * A hook that handles the registration of the service worker
  *
@@ -18,10 +19,11 @@ fun useServiceWorker(serviceWorkerScriptUrl: String = "/sw.js"): ServiceWorkerSt
     suspend fun loadServiceWorkerState() {
         try {
 
-       //    delay(15_000)
+            //    delay(15_000)
             val swRegistration = window.navigator.serviceWorker.register(serviceWorkerScriptUrl).await()
             setServiceWorkerState(ServiceWorkerState.Registered(swRegistration = swRegistration))
         } catch (e: Exception) {
+            console.log("----SW-Error: $e")
             setServiceWorkerState(ServiceWorkerState.Failed(exception = e))
         }
     }

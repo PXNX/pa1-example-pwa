@@ -14,15 +14,17 @@ sealed class ServiceWorkerState {
     /**
      * Indicates that the JavaScript service worker [register](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register) method has resolved with a [ServiceWorkerRegistration] object
      */
-    data class Registered(val swRegistration: ServiceWorkerRegistration): ServiceWorkerState()
+    data class Registered(val swRegistration: ServiceWorkerRegistration) : ServiceWorkerState()
+
     /**
      * Indicates that the JavaScript service worker [register](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register) method has failed unexpectedly
      */
-    data class Failed(val exception: Exception): ServiceWorkerState()
+    data class Failed(val exception: Exception) : ServiceWorkerState()
+
     /**
      * The initial state of the service worker
      */
-    object Loading: ServiceWorkerState()
+    object Loading : ServiceWorkerState()
 }
 
 /**
@@ -32,23 +34,27 @@ sealed class PushManagerState {
     /**
      * Indicates that the user is subscribed to the push service
      */
-    data class Subscribed(val pushManager: PushManager): PushManagerState()
+    data class Subscribed(val pushManager: PushManager) : PushManagerState()
+
     /**
      * Indicates that the [PushManager] exists and is loaded, but the user is not subscribed to the push service
      */
-    data class NotSubscribed(val pushManager: PushManager): PushManagerState()
+    data class NotSubscribed(val pushManager: PushManager) : PushManagerState()
+
     /**
      * Indicates that the [PushManager] has not been loaded yet
      */
-    object NotLoaded: PushManagerState()
+    object NotLoaded : PushManagerState()
+
     /**
      * Indicates that the [PushManager] is currently retrieving an existing push subscription
      */
-    object Loading: PushManagerState()
+    object Loading : PushManagerState()
+
     /**
      * Indicates that the service worker does not expose the [PushManager] interface
      */
-    object NotSupported: PushManagerState()
+    object NotSupported : PushManagerState()
 }
 
 /**
