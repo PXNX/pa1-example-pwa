@@ -1,23 +1,22 @@
-package client
-
-import Title
-import client.component.loadingComponent
+import component.loadingComponent
 import kotlinx.coroutines.MainScope
 import react.Props
 import react.RBuilder
 import react.RHandler
 import react.dom.h1
 import react.functionComponent
-import client.util.ServiceWorkerState
-import client.util.UsePushManager
-import client.util.usePushManager
-import client.util.useServiceWorker
+import util.ServiceWorkerState
+import util.UsePushManager
+import util.usePushManager
+import util.useServiceWorker
 
-val scope = MainScope()
+
 lateinit var serviceWorkerState: ServiceWorkerState
 lateinit var pushManager: UsePushManager
 
 val App = functionComponent<Props> {
+
+    MainScope()
 
     serviceWorkerState = useServiceWorker()
     pushManager = usePushManager(

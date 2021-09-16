@@ -1,4 +1,4 @@
-package client.component
+package component
 
 import client.component.loading.LoadingSpinner
 import kotlinx.css.*

@@ -1,5 +1,3 @@
-package serviceWorker
-
 import org.khronos.webgl.ArrayBuffer
 import org.w3c.files.Blob
 import org.w3c.workers.ExtendableEvent

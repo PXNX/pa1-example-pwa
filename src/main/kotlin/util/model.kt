@@ -1,4 +1,4 @@
-package client.util
+package util
 
 import kotlinx.coroutines.MainScope
 import org.khronos.webgl.ArrayBuffer

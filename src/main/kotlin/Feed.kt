@@ -1,7 +1,6 @@
-package client
-
-import client.component.iconButton
-import client.component.loadingComponent
+import component.iconButton
+import component.loadingComponent
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
@@ -13,15 +12,14 @@ import react.dom.attrs
 import react.dom.button
 import react.dom.h2
 import styled.*
-import client.util.PushManagerState
-import client.util.isLandscape
-import client.util.isPortrait
+import util.PushManagerState
+import util.isLandscape
+import util.isPortrait
 
 
 external interface FeedProps : Props {
     var pushManagerState: PushManagerState
 }
-
 
 class Feed(var feedProps: FeedProps) : RComponent<FeedProps, State>(feedProps) {
 
@@ -29,6 +27,7 @@ class Feed(var feedProps: FeedProps) : RComponent<FeedProps, State>(feedProps) {
         state.init(feedProps)
     }
 
+    private val scope = MainScope()
 
     override fun RBuilder.render() {
 

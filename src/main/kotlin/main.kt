@@ -1,9 +1,7 @@
-import client.App
 import kotlinext.js.jsObject
 import kotlinx.browser.document
 import kotlinx.css.*
 import react.dom.render
-import serviceWorker.installServiceWorker
 import styled.injectGlobal
 
 fun main(){

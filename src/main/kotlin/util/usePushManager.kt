@@ -1,4 +1,4 @@
-package client.util
+package util
 
 import kotlinx.coroutines.await
 import kotlinx.coroutines.launch

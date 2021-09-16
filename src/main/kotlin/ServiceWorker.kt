@@ -1,5 +1,3 @@
-package serviceWorker
-
 import kotlinx.coroutines.*
 import org.w3c.fetch.Response
 import org.w3c.notifications.NotificationEvent

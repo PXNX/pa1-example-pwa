@@ -1,4 +1,4 @@
-package client.util
+package util
 
 import org.khronos.webgl.ArrayBuffer
 import org.w3c.files.Blob
