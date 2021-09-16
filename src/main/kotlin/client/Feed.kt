@@ -25,6 +25,10 @@ external interface FeedProps : Props {
 
 class Feed(var feedProps: FeedProps) : RComponent<FeedProps, State>(feedProps) {
 
+    init{
+        state.init(feedProps)
+    }
+
 
     override fun RBuilder.render() {
 

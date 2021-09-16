@@ -14,9 +14,9 @@ const val MAIN_CACHE = "mainCache"
 fun installServiceWorker() {
     val offlineContent = arrayOf(
             "/index.html",
-            "/client.js",
-            "/kotlin-192.png",
-            "/kotlin-512.png"
+            "/pa1-example-pwa.js",
+            "/logo/logo-192.png",
+            "/logo/logo-512.png"
     )
 
     self.addEventListener("install", { event ->

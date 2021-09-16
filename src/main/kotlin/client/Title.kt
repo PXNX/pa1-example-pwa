@@ -19,7 +19,6 @@ data class TitleState(val name: String) : State
 class Title(var titleProps: TitleProps) : RComponent<TitleProps, TitleState>( titleProps) {
 
 
-
     override fun RBuilder.render() {
 
         styledHeader {
