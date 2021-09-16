@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="pa1-example-pwa-1.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="pa1-example-pwa-1.0-SNAPSHOT.jar" />
+  </artifact>
+</component>

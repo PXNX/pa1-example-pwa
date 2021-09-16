@@ -1,0 +1,25 @@
+{
+  "name": "pa1_pwa",
+  "short_name": "pa1_pwa",
+  "description": "PWA-Test für PA1.",
+  "icons": [
+    {
+      "src": "./logo/logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./logo/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#0f355a",
+  "background_color": "#0f355a",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "./index.html",
+  "prefer_related_applications": true
+}

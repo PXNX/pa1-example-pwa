@@ -1,0 +1,1 @@
+rootProject.name = "pa1-example-pwa"
