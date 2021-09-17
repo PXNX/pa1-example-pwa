@@ -1,9 +1,9 @@
 import component.loadingComponent
-import react.Props
-import react.RBuilder
-import react.RHandler
+import data.Repository
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import react.*
 import react.dom.h1
-import react.functionComponent
 import util.ServiceWorkerState
 import util.UsePushManager
 import util.usePushManager
@@ -14,6 +14,8 @@ lateinit var serviceWorkerState: ServiceWorkerState
 lateinit var pushManager: UsePushManager
 
 val App = functionComponent<Props> {
+
+    val scope = MainScope()
 
     try {
         serviceWorkerState = useServiceWorker()
@@ -34,11 +36,31 @@ val App = functionComponent<Props> {
                 }
             }
 
-            child(Feed::class) {
+
+         child(Feed::class) {
                 attrs {
                     pushManagerState = pushManager.pushManagerState
-                }
+
+                    console.log(">>>>>>>>> STATE --- INIT")
+
+
+
+
+
+            scope.launch {
+                val res =  Repository.fetchArticle(4)
+                previews =  Repository.fetchArticles()
+                console.log(">>> DETAIL-4 ::::: $res")
+
+
+                console.log(">>> PREVIEWS ::::: $previews")
             }
+
+
+                }
+
+            }
+
 
 
         }
