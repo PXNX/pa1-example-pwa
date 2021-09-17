@@ -20,6 +20,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.5.2-native-mt")
     implementation(npm("react-loader-spinner", "3.1.14"))
     implementation(npm("styled-components", "~5.2.1"))
+
+    implementation("io.ktor:ktor-client-core:1.6.3")
+    implementation("io.ktor:ktor-client-js:1.6.3")
+    implementation("io.ktor:ktor-client-serialization:1.6.3")
 }
 
 kotlin {

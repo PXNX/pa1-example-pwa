@@ -3,6 +3,7 @@ import data.Repository
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.css.*
+import model.ArticleDetail
 import model.ArticlePreview
 import react.*
 import react.dom.attrs
@@ -13,21 +14,11 @@ import util.isPortrait
 
 
 external interface FeedProps : Props {
-    var pushManagerState: PushManagerState //Unit??
-    var previews:List<ArticlePreview>
+ //   var pushManagerState: PushManagerState //Unit??
+    var previews:List<ArticleDetail>
 }
 
-class Feed(feedProps: FeedProps) : RComponent<FeedProps, State>(feedProps) {
-
-    init {
-         state.init(feedProps)
-     }
-
-
-
-
-
-
+class Feed : RComponent<FeedProps, State>() {
 
     override fun RBuilder.render() {
 
@@ -122,7 +113,7 @@ class Feed(feedProps: FeedProps) : RComponent<FeedProps, State>(feedProps) {
                                 marginBottom = LinearDimension("1rem")
                             }
 
-                            styledImg(src = article.imageUrl) {
+                          /*  styledImg(src = article.imageUrl) {
                                 attrs {
                                     width = "100%"
                                     height = "120px"
@@ -133,6 +124,8 @@ class Feed(feedProps: FeedProps) : RComponent<FeedProps, State>(feedProps) {
                                     borderTopLeftRadius = LinearDimension("16px")
                                 }
                             }
+
+                           */
 
                             styledDiv {
                                 css {
@@ -229,3 +222,5 @@ class Feed(feedProps: FeedProps) : RComponent<FeedProps, State>(feedProps) {
         }
     }
 }
+
+fun RBuilder.feed(handler: FeedProps.() -> Unit) = child(Feed::class) { this.attrs(handler) }

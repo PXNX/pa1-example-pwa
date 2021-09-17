@@ -1,4 +1,3 @@
-import kotlinext.js.jsObject
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.css.*
@@ -48,6 +47,6 @@ fun main() {
     injectGlobal(styles.toString())
 
     render(document.getElementById("root")) {
-        App(props = jsObject(), handler = {})
+        child(App::class) {}
     }
 }
