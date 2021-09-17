@@ -16,6 +16,11 @@ val httpClient = HttpClient(Js) {
             protocol = URLProtocol.HTTPS
         }
         contentType(ContentType.Application.Json)
+      /*  headers {
+            append(HttpHeaders.AccessControlAllowOrigin,"*")
+        }
+
+       */
     }
 
     //  expectSuccess=false

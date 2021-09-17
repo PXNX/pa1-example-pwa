@@ -4,11 +4,15 @@ import io.ktor.client.features.*
 import io.ktor.client.features.get
 import io.ktor.client.request.*
 import io.ktor.http.*
+import kotlinext.js.asJsObject
 import kotlinx.browser.window
 import kotlinx.coroutines.*
 import model.ArticleDetail
 import model.ArticlePreview
 import model.KotlinArticlePreview
+import org.w3c.fetch.NO_CORS
+import org.w3c.fetch.RequestInit
+import org.w3c.fetch.RequestMode
 
 object Repository{
     private const val baseUrl = "https://pa1-server.herokuapp.com/"
@@ -27,7 +31,19 @@ object Repository{
 
 
 
-        return@coroutineScope httpClient.get<List<ArticlePreview>>("previews"){
+
+       val response = window.fetch("${baseUrl}previews", RequestInit(mode = RequestMode.NO_CORS)).await()
+
+        console.log("RESP::: head ${response.headers.asJsObject().valueOf()} -- body ${response.body}")
+
+       val jsss = response.json().await()
+
+        console.log("JSSS::: $jsss")
+
+        return@coroutineScope jsss       as List<ArticlePreview>
+
+     /*   return@coroutineScope httpClient.get<List<ArticlePreview>>("previews"){
+
            /* headers {
                 append(HttpHeaders.Accept, "application/json")
                 append(HttpHeaders.AccessControlAllowOrigin,"*")
@@ -35,6 +51,8 @@ object Repository{
 
             */
         }
+
+      */
 
 
 
