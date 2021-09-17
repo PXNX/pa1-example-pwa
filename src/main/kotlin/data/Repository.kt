@@ -28,10 +28,12 @@ object Repository{
 
 
         return@coroutineScope httpClient.get<List<ArticlePreview>>("previews"){
-            headers {
+           /* headers {
                 append(HttpHeaders.Accept, "application/json")
                 append(HttpHeaders.AccessControlAllowOrigin,"*")
             }
+
+            */
         }
 
 
