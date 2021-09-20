@@ -128,14 +128,22 @@ console.log("index: $index")
                     }
 
 
-                    +" Nachrichten rund um Militär- und Protest-Aktionen weltweit und brandaktuell 🔰"
+                    styledP{
+                        css{
+                            fontWeight = FontWeight.bold
+                        }
+
+                        +"Auf dem Laufenden bleiben"
+                    }
+
+                    +"Nachrichten rund um Militär- und Protest-Aktionen weltweit und brandaktuell 🔰"
 
 
                     //      props.pushAction
 
 
                     styledButton {
-                        +"Auf dem Laufenden bleiben (push notification)"
+                        +"Benachrichtungen aktivieren"
 
                         attrs {
 
@@ -189,7 +197,6 @@ console.log("index: $index")
 
                         css {
                             fontWeight = FontWeight.bold
-                            color = Color("#fff")
                         }
                     }
 
