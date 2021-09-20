@@ -1,12 +1,15 @@
 import component.iconButton
+import csstype.BackgroundSize
 import data.Repository
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.css.*
+import kotlinx.html.js.onClickFunction
 import model.ArticleDetail
 import model.ArticlePreview
 import react.*
 import react.dom.attrs
+import react.dom.button
 import styled.*
 import util.PushManagerState
 import util.isLandscape
@@ -14,8 +17,9 @@ import util.isPortrait
 
 
 external interface FeedProps : Props {
- //   var pushManagerState: PushManagerState //Unit??
-    var previews:List<ArticleDetail>
+ // var pushManagerState: PushManagerState //Unit??
+    var previews:List<ArticlePreview>
+  var pushAction: Unit
 }
 
 class Feed : RComponent<FeedProps, State>() {
@@ -29,6 +33,7 @@ class Feed : RComponent<FeedProps, State>() {
                 display = Display.flex
                 justifyContent = JustifyContent.center
                 marginTop = 80.px
+                padding="8px"
             }
 
             styledDiv {
@@ -40,7 +45,7 @@ class Feed : RComponent<FeedProps, State>() {
 
                   props.previews.forEachIndexed { index, article ->
 
-                        /*
+
                         if (index % 12 == 0) {
                             styledDiv {
                                 css {
@@ -56,42 +61,7 @@ class Feed : RComponent<FeedProps, State>() {
 
 
 
-                                when (feedProps.pushManagerState) {
-                                    is PushManagerState.NotSubscribed -> {
-                                        button {
-                                            attrs {
-                                                onClickFunction = {
-                                                    scope.launch {
-                                                        pushManager.subscribeUser(feedProps.pushManagerState as PushManagerState.NotSubscribed) {
-                                                            console.log("Sending subscription to server...")
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            +"Click here to subscribe to push notifications"
-                                        }
-                                    }
-                                    is PushManagerState.Subscribed -> {
-                                        h2 {
-                                            +"User is subscribed to Push API"
-                                        }
-                                        button {
-                                            attrs {
-                                                onClickFunction = {
-                                                    scope.launch {
-                                                        pushManager.unsubscribeUser(feedProps.pushManagerState as PushManagerState.Subscribed)
-                                                    }
-                                                }
-                                            }
-                                            +"Click here to unsubscribe"
-                                        }
-                                    }
-                                    PushManagerState.NotSupported -> h2 {
-                                        +"Push API is not supported on this browser"
-                                    }
-                                    PushManagerState.Loading, PushManagerState.NotLoaded -> loadingComponent()
-                                }
-
+                       //      props.pushAction
 
 
                                 styledButton {
@@ -103,7 +73,7 @@ class Feed : RComponent<FeedProps, State>() {
                                 }
                             }
                         }
-                         */
+
 
                         styledDiv {
                             css {
@@ -113,19 +83,20 @@ class Feed : RComponent<FeedProps, State>() {
                                 marginBottom = LinearDimension("1rem")
                             }
 
-                          /*  styledImg(src = article.imageUrl) {
+                           styledImg(src = article.imageUrl) {
                                 attrs {
                                     width = "100%"
-                                    height = "120px"
+                                    height = "150px"
                                 }
 
                                 css {
                                     borderTopRightRadius = LinearDimension("16px")
                                     borderTopLeftRadius = LinearDimension("16px")
+                                    objectFit=ObjectFit.cover
                                 }
                             }
 
-                           */
+
 
                             styledDiv {
                                 css {
