@@ -15,7 +15,7 @@ fun RBuilder.loadingComponent() = styledDiv {
         height = LinearDimension.fillAvailable
         alignContent = Align.center
         justifyContent = JustifyContent.center
-        padding="16px"
+        padding = "16px"
     }
 
 

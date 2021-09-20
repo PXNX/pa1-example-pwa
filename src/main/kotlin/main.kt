@@ -2,11 +2,7 @@ import kotlinext.js.jsObject
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.css.*
-import react.dom.div
 import react.dom.render
-import react.router.dom.browserRouter
-import react.router.dom.route
-import react.router.dom.switch
 import styled.injectGlobal
 
 fun main() {
@@ -52,6 +48,6 @@ fun main() {
     injectGlobal(styles.toString())
 
     render(document.getElementById("root")) {
-        app(props = jsObject()){}
+        app(props = jsObject()) {}
     }
 }

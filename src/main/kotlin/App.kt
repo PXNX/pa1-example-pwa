@@ -4,10 +4,6 @@ import react.RBuilder
 import react.RHandler
 import react.dom.h1
 import react.fc
-import react.router.dom.BrowserRouter
-import react.router.dom.Route
-import react.router.dom.Switch
-import react.router.dom.useRouteMatch
 import util.ServiceWorkerState
 import util.usePushManager
 import util.useServiceWorker
@@ -30,21 +26,23 @@ val App = fc<Props> {
                 }
             }
 
-            val match = useRouteMatch()
+            //  val match = useRouteMatch()
 
-            BrowserRouter {
-                Switch {
-                    Route {
-                        attrs {
-                            path = arrayOf("/post/:id")
-                            component = feed {
+            feed { }
 
+            /*    BrowserRouter {
+                    Switch {
+                        Route {
+                            attrs {
+                                path = arrayOf("/post/:id")
+                                component = Feed
                             }
                         }
-                    }
 
+                    }
                 }
-            }
+
+             */
 
 
             /*   child(Feed::class) {

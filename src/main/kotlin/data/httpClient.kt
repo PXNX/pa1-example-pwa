@@ -7,7 +7,6 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.serialization.json.Json
 
 val httpClient = HttpClient(Js) {
     defaultRequest {
@@ -16,11 +15,11 @@ val httpClient = HttpClient(Js) {
             protocol = URLProtocol.HTTPS
         }
         contentType(ContentType.Application.Json)
-      /*  headers {
-            append(HttpHeaders.AccessControlAllowOrigin,"*")
-        }
+        /*  headers {
+              append(HttpHeaders.AccessControlAllowOrigin,"*")
+          }
 
-       */
+         */
     }
 
     //  expectSuccess=false
