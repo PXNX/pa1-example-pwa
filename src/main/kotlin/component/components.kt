@@ -10,10 +10,12 @@ import styled.*
 fun RBuilder.loadingComponent() = styledDiv {
     css {
         backgroundColor = Color("#fff444")
+        borderRadius = LinearDimension("16px")
         width = LinearDimension.fillAvailable
         height = LinearDimension.fillAvailable
         alignContent = Align.center
         justifyContent = JustifyContent.center
+        padding="16px"
     }
 
 
@@ -21,8 +23,8 @@ fun RBuilder.loadingComponent() = styledDiv {
         attrs {
             type = "Oval"
             color = "white"
-            height = 100
-            width = 100
+            height = 90
+            width = 90
         }
     }
 }

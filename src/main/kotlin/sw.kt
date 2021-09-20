@@ -65,8 +65,8 @@ fun installServiceWorker() {
                 options = NotificationOptions(
                     tag = "tag",
                     body = payloadString,
-                    icon = "/kotlin-192.png",
-                    badge = "/kotlin-192.png"
+                    icon = "/logo/logo-192.png",
+                    badge = "/logo/logo-192.png"
                 )
             )
         )

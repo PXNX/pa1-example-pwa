@@ -1,28 +1,53 @@
 import component.iconButton
-import csstype.BackgroundSize
+import component.loadingComponent
 import data.Repository
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.css.*
-import kotlinx.html.js.onClickFunction
-import model.ArticleDetail
 import model.ArticlePreview
+import util.Status
 import react.*
 import react.dom.attrs
-import react.dom.button
+import react.dom.h1
+import react.dom.p
+import react.router.dom.navLink
 import styled.*
-import util.PushManagerState
 import util.isLandscape
 import util.isPortrait
 
-
-external interface FeedProps : Props {
+external interface FeedProps : RProps {
  // var pushManagerState: PushManagerState //Unit??
     var previews:List<ArticlePreview>
   var pushAction: Unit
 }
 
-class Feed : RComponent<FeedProps, State>() {
+external interface FeedState : State {
+    // var pushManagerState: PushManagerState //Unit??
+    var previews: Status<*>
+    var pushAction: Unit
+}
+
+val Feed = fc<FeedProps> {
+
+
+
+    override fun FeedState.init(){
+
+        previews = Status.Loading<Any>()
+
+
+
+        val mainScope = MainScope()
+        mainScope.launch{
+            val articlePreviews = Repository.fetchArticles()
+
+            console.log(">>> articlePreviews ::: $articlePreviews")
+
+            setState {
+                previews = articlePreviews
+            }
+        }
+    }
 
     override fun RBuilder.render() {
 
@@ -41,125 +66,27 @@ class Feed : RComponent<FeedProps, State>() {
                     width = if (isLandscape) LinearDimension("50%") else LinearDimension.fillAvailable
                 }
 
-              if (props.previews.isNotEmpty()) {
 
-                  props.previews.forEachIndexed { index, article ->
+                    when(val result = state.previews){
+                        is Status.Loading -> loadingComponent()
 
+                        is Status.Success<*> -> showFeed(result.data as Array<ArticlePreview>)
 
-                        if (index % 12 == 0) {
-                            styledDiv {
-                                css {
-                                    backgroundColor = Color("#016b6b")
-                                    width = LinearDimension.fillAvailable
-                                    borderRadius = LinearDimension("16px")
-                                    padding = "1.5rem"
-                                    marginBottom = LinearDimension("1rem")
-                                }
-
-
-                                +" Nachrichten rund um Militär- und Protest-Aktionen weltweit und brandaktuell 🔰"
-
-
-
-                       //      props.pushAction
-
-
-                                styledButton {
-                                    +"Auf dem Laufenden bleiben (push notification)"
-
-                                    attrs {
-
-                                    }
-                                }
+                       is Status.Failure ->{
+                            h1{
+                                +"Feed could not be loaded."
+                            }
+                            p{
+                                +result.exception.toString()
                             }
                         }
 
 
-                        styledDiv {
-                            css {
-                                backgroundColor = Color("#12273d")
-                                width = LinearDimension.fillAvailable
-                                borderRadius = LinearDimension("16px")
-                                marginBottom = LinearDimension("1rem")
-                            }
-
-                           styledImg(src = article.imageUrl) {
-                                attrs {
-                                    width = "100%"
-                                    height = "150px"
-                                }
-
-                                css {
-                                    borderTopRightRadius = LinearDimension("16px")
-                                    borderTopLeftRadius = LinearDimension("16px")
-                                    objectFit=ObjectFit.cover
-                                }
-                            }
-
-
-
-                            styledDiv {
-                                css {
-                                    padding = "0.75rem"
-                                }
-
-                                styledP {
-                                    +article.title
-
-                                    css {
-                                        fontWeight = FontWeight.bold
-                                        color = Color("#fff")
-                                    }
-                                }
-
-                                /*  styledP {
-                                      +article.tags
-
-                                      css {
-                                          color = Color("#fff")
-                                      }
-                                  }
-
-                                 */
-                            }
-                        }
                     }
 
-                    styledDiv {
-                        css {
-                            backgroundColor = Color("#016b6b")
-                            width = LinearDimension.fillAvailable
-                            borderRadius = LinearDimension("16px")
-                            marginBottom = LinearDimension("12rem")
-                            padding = "1.5rem"
-                        }
-
-
-                        +" Nachrichten rund um Militär- und Protest-Aktionen weltweit und brandaktuell 🔰"
 
 
 
-
-
-                        styledButton {
-                            +"Auf dem Laufenden bleiben (push notification)"
-
-                            attrs {
-
-                            }
-                        }
-
-                    }
-              } else {
-                    styledP {
-                        +"Keine Meldungen verfügbar."
-
-                        css {
-                            fontWeight = FontWeight.bold
-                            color = Color("#fff")
-                        }
-                    }
-                }
 
 
 
@@ -190,6 +117,136 @@ class Feed : RComponent<FeedProps, State>() {
 
                 //   iconButton("mailto:militaernews@protonmail.com", "icon-mail")
             }
+        }
+    }
+
+
+}
+
+private fun RBuilder.showFeed(articlePreviews:Array<ArticlePreview>) =  if (articlePreviews.isNotEmpty()) {
+
+    articlePreviews.forEachIndexed { index, article ->
+
+
+        if (index % 12 == 0) {
+            styledDiv {
+                css {
+                    backgroundColor = Color("#016b6b")
+                    width = LinearDimension.fillAvailable
+                    borderRadius = LinearDimension("16px")
+                    padding = "1.5rem"
+                    marginBottom = LinearDimension("1rem")
+                }
+
+
+                +" Nachrichten rund um Militär- und Protest-Aktionen weltweit und brandaktuell 🔰"
+
+
+
+                //      props.pushAction
+
+
+                styledButton {
+                    +"Auf dem Laufenden bleiben (push notification)"
+
+                    attrs {
+
+                    }
+                }
+            }
+        }
+
+
+        navLink<FeedProps>("123"){
+
+
+        styledDiv {
+            css {
+                backgroundColor = Color("#12273d")
+                width = LinearDimension.fillAvailable
+                borderRadius = LinearDimension("16px")
+                marginBottom = LinearDimension("1rem")
+            }
+
+
+
+            styledImg(src = article.imageUrl) {
+                attrs {
+                    width = "100%"
+                    height = "150px"
+                }
+
+                css {
+                    borderTopRightRadius = LinearDimension("16px")
+                    borderTopLeftRadius = LinearDimension("16px")
+                    objectFit=ObjectFit.cover
+                }
+            }
+
+
+
+            styledDiv {
+                css {
+                    padding = "0.75rem"
+                }
+
+                styledP {
+                    +article.title
+
+                    css {
+                        fontWeight = FontWeight.bold
+                        color = Color("#fff")
+                    }
+                }
+
+
+            /*    styledP {
+                      +article.tags
+
+                      css {
+                          color = Color("#8797ff")
+                      }
+                  }
+
+             */
+
+
+            }
+        }
+    }   }
+
+    styledDiv {
+        css {
+            backgroundColor = Color("#016b6b")
+            width = LinearDimension.fillAvailable
+            borderRadius = LinearDimension("16px")
+            marginBottom = LinearDimension("12rem")
+            padding = "1.5rem"
+        }
+
+
+        +" Nachrichten rund um Militär- und Protest-Aktionen weltweit und brandaktuell 🔰"
+
+
+
+
+
+        styledButton {
+            +"Auf dem Laufenden bleiben (push notification)"
+
+            attrs {
+
+            }
+        }
+
+    }
+} else {
+    styledP {
+        +"Keine Meldungen verfügbar."
+
+        css {
+            fontWeight = FontWeight.bold
+            color = Color("#fff")
         }
     }
 }

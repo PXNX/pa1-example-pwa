@@ -14,7 +14,7 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin-wrappers:kotlin-react:17.0.2-pre.244-kotlin-1.5.30")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom:17.0.2-pre.244-kotlin-1.5.30")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom:5.2.0-pre.206-kotlin-1.5.10")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom:5.2.0-pre.246-kotlin-1.5.30")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-styled:5.3.1-pre.244-kotlin-1.5.30")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-styled-next:0.1-pre.244-kotlin-1.5.30")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.5.2-native-mt")
