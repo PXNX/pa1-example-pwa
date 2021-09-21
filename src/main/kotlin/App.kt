@@ -1,22 +1,29 @@
+import com.bnorm.react.RFunction
 import component.loadingComponent
+import kotlinx.coroutines.launch
+import kotlinx.html.js.onClickFunction
 import react.Props
 import react.RBuilder
 import react.RHandler
+import react.dom.attrs
+import react.dom.button
 import react.dom.h1
+import react.dom.h2
 import react.fc
+import util.PushManagerState
 import util.ServiceWorkerState
 import util.usePushManager
 import util.useServiceWorker
 
-val App = fc<Props> {
+@RFunction
+fun RBuilder.App(appProps: Props){
 
     val serviceWorkerState = useServiceWorker()
-    val pushManager = usePushManager(
+
+    val usePushManager  = usePushManager(
         serviceWorkerState = serviceWorkerState,
         publicKey = "BLceSSynHW5gDWDz-SK5mmQgUSAOzs_yXMPtDO0AmNsRjUllTZsdmDU4_gKvTr_q1hA8ZX19xLbGe28Bkyvwm3E"
     )
-
-
 
     when (serviceWorkerState) {
         is ServiceWorkerState.Registered -> {
@@ -28,7 +35,15 @@ val App = fc<Props> {
 
             //  val match = useRouteMatch()
 
-            feed { }
+         /*   feed {
+
+
+
+            }
+
+          */
+
+        //    NotificationBanner(usePushManager)
 
             /*    BrowserRouter {
                     Switch {
@@ -81,5 +96,3 @@ val App = fc<Props> {
     }
 
 }
-
-fun RBuilder.app(props: Props, handler: RHandler<Props>) = child(App, props, handler)

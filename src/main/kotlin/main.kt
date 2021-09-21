@@ -48,6 +48,6 @@ fun main() {
     injectGlobal(styles.toString())
 
     render(document.getElementById("root")) {
-        app(props = jsObject()) {}
+        App(jsObject())
     }
 }

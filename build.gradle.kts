@@ -24,6 +24,8 @@ dependencies {
     implementation("io.ktor:ktor-client-core:1.6.3")
     implementation("io.ktor:ktor-client-js:1.6.3")
     implementation("io.ktor:ktor-client-serialization:1.6.3")
+
+    implementation("com.bnorm.react:kotlin-react-function:0.5.1")
 }
 
 kotlin {

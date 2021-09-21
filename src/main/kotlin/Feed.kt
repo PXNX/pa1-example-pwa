@@ -4,35 +4,40 @@ import data.Repository
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.css.*
+import kotlinx.html.js.onClickFunction
 import model.ArticlePreview
 import react.*
-import react.dom.attrs
-import react.dom.h1
-import react.dom.p
+import react.dom.*
 import styled.*
-import util.Status
-import util.isLandscape
-import util.isPortrait
+import util.*
 
 external interface FeedProps : Props {
     // var pushManagerState: PushManagerState //Unit??
     var previews: List<ArticlePreview>
-    var pushAction: Unit
+    var pushManagerState: PushManagerState
+    var pushAction:Unit
+    var pushManager:UsePushManager
+
 }
 
 external interface FeedState : State {
     // var pushManagerState: PushManagerState //Unit??
     var previews: Status<*>
+    var pushManagerState: PushManagerState
     var pushAction: Unit
+    var pushManager:UsePushManager
+
 }
 
 class Feed : RComponent<FeedProps, FeedState>() {
+
+    private val scope = MainScope()
 
     override fun FeedState.init() {
 
         previews = Status.Loading<Any>()
         console.log(">>> previews 1 ::: $previews")
-        val mainScope = MainScope()
+       val mainScope = MainScope()
         mainScope.launch {
             val articlePreviews = Repository.fetchArticles()
             console.log(">>> previews 2 ::: $previews")
@@ -40,6 +45,7 @@ class Feed : RComponent<FeedProps, FeedState>() {
 
             setState {
                 previews = articlePreviews
+                pushManager=props.pushManager
                 console.log(">>> previews 3 ::: $previews")
             }
         }
@@ -113,43 +119,66 @@ class Feed : RComponent<FeedProps, FeedState>() {
 
     private fun RBuilder.showFeed(articlePreviews: Array<ArticlePreview>) = if (articlePreviews.isNotEmpty()) {
 
+
+        styledDiv {
+            css {
+                backgroundColor = Color("#016b6b")
+                width = LinearDimension.fillAvailable
+                borderRadius = LinearDimension("16px")
+                padding = "1.5rem"
+                marginBottom = LinearDimension("1rem")
+            }
+
+
+
+
+            styledP {
+                css {
+                    fontWeight = FontWeight.bold
+                }
+
+                +"Auf dem Laufenden bleiben"
+            }
+
+            +"Nachrichten rund um Militär- und Protest-Aktionen weltweit und brandaktuell 🔰"
+
+
+
+
+
+
+            styledButton {
+                +"Benachrichtungen aktivieren"
+
+
+
+                attrs {
+
+/*
+onClick={
+   state.pushManagerState = PushManagerState.Subscribed()
+}
+
+ */
+                }
+
+                state.pushAction
+
+                css {
+                    backgroundColor =
+                        if (state.pushManagerState is PushManagerState.Subscribed) Color.aliceBlue else Color.crimson
+                }
+
+            }
+        }
+
+
         articlePreviews.forEachIndexed { index, article ->
 
-console.log("index: $index")
+     //       console.log("index: $index")
 
-            if (index % 12 == 0) {
-                styledDiv {
-                    css {
-                        backgroundColor = Color("#016b6b")
-                        width = LinearDimension.fillAvailable
-                        borderRadius = LinearDimension("16px")
-                        padding = "1.5rem"
-                        marginBottom = LinearDimension("1rem")
-                    }
+            if (index+3 % 15 == 0) {
 
-
-                    styledP{
-                        css{
-                            fontWeight = FontWeight.bold
-                        }
-
-                        +"Auf dem Laufenden bleiben"
-                    }
-
-                    +"Nachrichten rund um Militär- und Protest-Aktionen weltweit und brandaktuell 🔰"
-
-
-                    //      props.pushAction
-
-
-                    styledButton {
-                        +"Benachrichtungen aktivieren"
-
-                        attrs {
-
-                        }
-                    }
-                }
             }
 
 
@@ -166,7 +195,7 @@ console.log("index: $index")
                 css {
                     backgroundColor = Color("#12273d")
                     width = LinearDimension.fillAvailable
-                    borderRadius = LinearDimension("16px")
+                    borderRadius = LinearDimension("10px")
                     marginBottom = LinearDimension("1rem")
                 }
 
@@ -179,8 +208,8 @@ console.log("index: $index")
                     }
 
                     css {
-                        borderTopRightRadius = LinearDimension("16px")
-                        borderTopLeftRadius = LinearDimension("16px")
+                        borderTopRightRadius = LinearDimension("10px")
+                        borderTopLeftRadius = LinearDimension("10px")
                         objectFit = ObjectFit.cover
                     }
                 }
