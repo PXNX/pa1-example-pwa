@@ -1,41 +1,29 @@
-import com.bnorm.react.RFunction
 import component.loadingComponent
-import kotlinx.coroutines.launch
-import kotlinx.html.js.onClickFunction
-import react.Props
-import react.RBuilder
-import react.RHandler
-import react.dom.attrs
-import react.dom.button
+import react.*
 import react.dom.h1
-import react.dom.h2
-import react.fc
-import util.PushManagerState
 import util.ServiceWorkerState
 import util.usePushManager
 import util.useServiceWorker
 
-@RFunction
-fun RBuilder.App(appProps: Props){
+val App = fc<Props> {
 
     val serviceWorkerState = useServiceWorker()
-
-    val usePushManager  = usePushManager(
+    val usePm = usePushManager(
         serviceWorkerState = serviceWorkerState,
         publicKey = "BLceSSynHW5gDWDz-SK5mmQgUSAOzs_yXMPtDO0AmNsRjUllTZsdmDU4_gKvTr_q1hA8ZX19xLbGe28Bkyvwm3E"
     )
 
-    when (serviceWorkerState) {
-        is ServiceWorkerState.Registered -> {
-            child(Header::class) {
-                attrs {
-                    name = "React!"
-                }
-            }
 
-            //  val match = useRouteMatch()
 
-         /*   feed {
+        when (serviceWorkerState) {
+            is ServiceWorkerState.Registered -> {
+               Header()
+
+                //  val match = useRouteMatch()
+
+               child(Feed::class) {}
+
+                /*   feed {
 
 
 
@@ -43,9 +31,9 @@ fun RBuilder.App(appProps: Props){
 
           */
 
-        //    NotificationBanner(usePushManager)
+                //    NotificationBanner(usePushManager)
 
-            /*    BrowserRouter {
+                /*    BrowserRouter {
                     Switch {
                         Route {
                             attrs {
@@ -60,7 +48,7 @@ fun RBuilder.App(appProps: Props){
              */
 
 
-            /*   child(Feed::class) {
+                /*   child(Feed::class) {
                       attrs {
                           pushManagerState = pushManager.pushManagerState
 
@@ -88,11 +76,12 @@ fun RBuilder.App(appProps: Props){
              */
 
 
+            }
+            is ServiceWorkerState.Failed -> h1 {
+                +"Error in registering service worker: ${serviceWorkerState.exception.message}"
+            }
+            ServiceWorkerState.Loading -> loadingComponent()
         }
-        is ServiceWorkerState.Failed -> h1 {
-            +"Error in registering service worker: ${serviceWorkerState.exception.message}"
-        }
-        ServiceWorkerState.Loading -> loadingComponent()
-    }
-
 }
+
+fun RBuilder.app(props: Props, handler: RHandler<Props>) = child(App, props, handler)

@@ -11,50 +11,27 @@ import react.dom.*
 import styled.*
 import util.*
 
-external interface FeedProps : Props {
-    // var pushManagerState: PushManagerState //Unit??
-    var previews: List<ArticlePreview>
-    var pushManagerState: PushManagerState
-    var pushAction:Unit
-    var pushManager:UsePushManager
-
-}
-
 external interface FeedState : State {
-    // var pushManagerState: PushManagerState //Unit??
-    var previews: Status<*>
-    var pushManagerState: PushManagerState
-    var pushAction: Unit
-    var pushManager:UsePushManager
-
+    var previews: List<ArticlePreview>
 }
 
-class Feed : RComponent<FeedProps, FeedState>() {
+class Feed : RComponent<Props, FeedState>() {
 
-    private val scope = MainScope()
+    init {
+        loadData()
+    }
 
-    override fun FeedState.init() {
+    private fun loadData() {
+        Repository.loadPreviews()
+            .then {
+                setState {
+                    previews = it
 
-        previews = Status.Loading<Any>()
-        console.log(">>> previews 1 ::: $previews")
-       val mainScope = MainScope()
-        mainScope.launch {
-            val articlePreviews = Repository.fetchArticles()
-            console.log(">>> previews 2 ::: $previews")
-            console.log(">>> articlePreviews ::: $articlePreviews")
-
-            setState {
-                previews = articlePreviews
-                pushManager=props.pushManager
-                console.log(">>> previews 3 ::: $previews")
+                }
             }
-        }
     }
 
     override fun RBuilder.render() {
-
-        // console.log(">>>>>>>>>FEED :: RENDER")
-
         styledDiv {
             css {
                 display = Display.flex
@@ -68,25 +45,8 @@ class Feed : RComponent<FeedProps, FeedState>() {
                     width = if (isLandscape) LinearDimension("50%") else LinearDimension.fillAvailable
                 }
 
-
-                when (val result = state.previews) {
-                    is Status.Loading -> loadingComponent()
-
-                    is Status.Success<*> -> showFeed(result.data as Array<ArticlePreview>)
-
-                    is Status.Failure -> {
-                        h1 {
-                            +"Feed could not be loaded."
-                        }
-                        p {
-                            +result.exception.toString()
-                        }
-                    }
-
-
-                }
-
-
+if(state.previews!=null)
+                showFeed(state.previews)
             }
         }
 
@@ -117,7 +77,7 @@ class Feed : RComponent<FeedProps, FeedState>() {
     }
 
 
-    private fun RBuilder.showFeed(articlePreviews: Array<ArticlePreview>) = if (articlePreviews.isNotEmpty()) {
+    private fun RBuilder.showFeed(articlePreviews: List<ArticlePreview>) = if (articlePreviews.isNotEmpty()) {
 
 
         styledDiv {
@@ -162,11 +122,10 @@ onClick={
  */
                 }
 
-                state.pushAction
+
 
                 css {
-                    backgroundColor =
-                        if (state.pushManagerState is PushManagerState.Subscribed) Color.aliceBlue else Color.crimson
+
                 }
 
             }
@@ -282,5 +241,3 @@ onClick={
 
     }
 }
-
-fun RBuilder.feed(handler: FeedProps.() -> Unit) = child(Feed::class) { this.attrs(handler) }

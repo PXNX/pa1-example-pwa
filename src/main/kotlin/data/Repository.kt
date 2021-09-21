@@ -14,8 +14,7 @@ import kotlin.js.json
 object Repository {
     private const val baseUrl = "https://pa1-server.herokuapp.com/"
 
-    fun loadMovies(): Promise<List<ArticlePreview>> =
-        getAndParseResult(
+    fun loadPreviews(): Promise<List<ArticlePreview>> = getAndParseResult(
             "${baseUrl}previews",
             null,
             ::parseToPreviews
@@ -49,10 +48,10 @@ object Repository {
         json.imageUrl as String
     )
 
-    fun <T> getAndParseResult(url: String, body: dynamic, parse: (dynamic) -> T): Promise<T> =
+    private fun <T> getAndParseResult(url: String, body: dynamic, parse: (dynamic) -> T): Promise<T> =
         requestAndParseResult("GET", url, body, parse)
 
-    fun <T> requestAndParseResult(method: String, url: String, body: dynamic, parse: (dynamic) -> T): Promise<T> {
+    private fun <T> requestAndParseResult(method: String, url: String, body: dynamic, parse: (dynamic) -> T): Promise<T> {
         val response = window.fetch(url, object : RequestInit {
             override var method: String? = method
             override var body: dynamic = body
@@ -62,4 +61,5 @@ object Repository {
         return response
             .then{ it.json() }
             .then { parse(it) }
+}
 }

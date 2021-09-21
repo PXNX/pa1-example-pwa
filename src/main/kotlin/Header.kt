@@ -1,9 +1,7 @@
+import com.bnorm.react.RFunction
 import component.iconButton
 import kotlinx.css.*
-import react.Props
-import react.RBuilder
-import react.RComponent
-import react.State
+import react.*
 import react.dom.attrs
 import styled.css
 import styled.styledDiv
@@ -15,13 +13,9 @@ external interface HeaderProps : Props {
     var name: String
 }
 
-data class HeaderState(val name: String) : State
+@RFunction
+fun RBuilder.Header() = fc<HeaderProps> {
 
-@OptIn(ExperimentalJsExport::class)
-@JsExport
-class Header(var headerProps: HeaderProps) : RComponent<HeaderProps, HeaderState>(headerProps) {
-
-    override fun RBuilder.render() {
         styledHeader {
             css {
                 backgroundColor = Color("#0c2b49")
@@ -71,7 +65,4 @@ class Header(var headerProps: HeaderProps) : RComponent<HeaderProps, HeaderState
                 }
             }
         }
-
-
     }
-}
