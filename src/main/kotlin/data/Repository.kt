@@ -1,9 +1,7 @@
 package data
 
 import kotlinx.browser.window
-import kotlinx.coroutines.await
 import kotlinx.coroutines.coroutineScope
-import model.ArticleDetail
 import model.ArticlePreview
 import model.KotlinArticlePreview
 import org.w3c.fetch.RequestInit
@@ -14,15 +12,24 @@ import kotlin.js.json
 object Repository {
     private const val baseUrl = "https://pa1-server.herokuapp.com/"
 
-    fun loadPreviews(): Promise<List<ArticlePreview>> = getAndParseResult(
-            "${baseUrl}previews",
-            null,
-            ::parseToPreviews
-        )
+    suspend fun fetchArticlePreviews(): Status<Any> = coroutineScope {
+        return@coroutineScope try {
+            Status.Success(
+                getAndParseResult(
+                    "${baseUrl}previews",
+                    null,
+                    ::parseToPreviews
+                )
+            )
+        } catch (e: Exception) {
+            console.log("fetchArticles() >> $e")
+            Status.Failure(e)
+        }
+    }
 
     private fun parseToPreviews(json: dynamic): List<ArticlePreview> {
         val result: MutableList<ArticlePreview> = mutableListOf()
-        for (item in json){
+        for (item in json) {
             result.add(parsePreview(item))
         }
         return result
@@ -44,14 +51,21 @@ object Repository {
      */
 
 
-    private fun parsePreview(json: dynamic) = KotlinArticlePreview(json.id as Int, json.title as String,
+    private fun parsePreview(json: dynamic) = KotlinArticlePreview(
+        json.id as Int,
+        json.title as String,
         json.imageUrl as String
     )
 
     private fun <T> getAndParseResult(url: String, body: dynamic, parse: (dynamic) -> T): Promise<T> =
         requestAndParseResult("GET", url, body, parse)
 
-    private fun <T> requestAndParseResult(method: String, url: String, body: dynamic, parse: (dynamic) -> T): Promise<T> {
+    private fun <T> requestAndParseResult(
+        method: String,
+        url: String,
+        body: dynamic,
+        parse: (dynamic) -> T
+    ): Promise<T> {
         val response = window.fetch(url, object : RequestInit {
             override var method: String? = method
             override var body: dynamic = body
@@ -59,7 +73,7 @@ object Repository {
         })
 
         return response
-            .then{ it.json() }
+            .then { it.json() }
             .then { parse(it) }
-}
+    }
 }

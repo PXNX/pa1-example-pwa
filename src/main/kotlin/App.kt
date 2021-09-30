@@ -8,20 +8,24 @@ import util.useServiceWorker
 val App = fc<Props> {
 
     val serviceWorkerState = useServiceWorker()
-    val usePm = usePushManager(
-        serviceWorkerState = serviceWorkerState,
-        publicKey = "BLceSSynHW5gDWDz-SK5mmQgUSAOzs_yXMPtDO0AmNsRjUllTZsdmDU4_gKvTr_q1hA8ZX19xLbGe28Bkyvwm3E"
-    )
 
+    /*         val usePm = usePushManager(
+                 serviceWorkerState = serviceWorkerState,
+                 publicKey = "BLceSSynHW5gDWDz-SK5mmQgUSAOzs_yXMPtDO0AmNsRjUllTZsdmDU4_gKvTr_q1hA8ZX19xLbGe28Bkyvwm3E"
+             )
+
+     */
 
 
         when (serviceWorkerState) {
             is ServiceWorkerState.Registered -> {
-               Header()
+              // Header()
 
                 //  val match = useRouteMatch()
 
                child(Feed::class) {}
+
+                feed { }
 
                 /*   feed {
 
@@ -30,6 +34,8 @@ val App = fc<Props> {
             }
 
           */
+
+
 
                 //    NotificationBanner(usePushManager)
 

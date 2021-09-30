@@ -6,7 +6,7 @@ import react.dom.render
 import styled.injectGlobal
 
 fun main() {
-    window.addEventListener("load", { event ->
+  /*  window.addEventListener("load", { event ->
         console.log("load event listener")
 
         /*
@@ -24,6 +24,7 @@ fun main() {
          */
     })
 
+   */
 
     val styles = CssBuilder().apply {
         html {

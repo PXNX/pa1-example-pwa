@@ -11,24 +11,30 @@ import react.dom.*
 import styled.*
 import util.*
 
-external interface FeedState : State {
+external interface FeedProps : Props {
+    // var pushManagerState: PushManagerState //Unit??
     var previews: List<ArticlePreview>
+    var pushAction: Unit
 }
 
-class Feed : RComponent<Props, FeedState>() {
+external interface FeedState : State {
+    // var pushManagerState: PushManagerState //Unit??
+    var previews: Status<*>
+    var pushAction: Unit
+}
 
-    init {
-        loadData()
-    }
+class Feed : RComponent<FeedProps, FeedState>() {
 
-    private fun loadData() {
-        Repository.loadPreviews()
-            .then {
-                setState {
-                    previews = it
 
-                }
+
+   override fun FeedState.init(){
+        val scope= MainScope()
+        scope.launch {
+           val articlePreviews= Repository.fetchArticlePreviews()
+            setState {
+                previews = articlePreviews
             }
+        }
     }
 
     override fun RBuilder.render() {
@@ -45,8 +51,23 @@ class Feed : RComponent<Props, FeedState>() {
                     width = if (isLandscape) LinearDimension("50%") else LinearDimension.fillAvailable
                 }
 
-if(state.previews!=null)
-                showFeed(state.previews)
+    when (val result = state.previews) {
+        is Status.Loading -> loadingComponent()
+
+        is Status.Success<*> -> showFeed(result.data as List<ArticlePreview>)
+
+        is Status.Failure -> {
+            h1 {
+                +"Feed could not be loaded."
+            }
+            p {
+                +result.exception.toString()
+            }
+        }
+
+
+    }
+
             }
         }
 
@@ -241,3 +262,5 @@ onClick={
 
     }
 }
+
+fun RBuilder.feed(handler: FeedProps.() -> Unit) = child(Feed::class) { this.attrs(handler) }
